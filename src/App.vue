@@ -1,5 +1,4 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
@@ -15,15 +14,8 @@ import HelloWorld from './components/HelloWorld.vue'
 <style scoped>
 
 .logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
+  width: 3rem;
+  height: fit-content;
+  margin: 1rem 0;
 }
 </style>
