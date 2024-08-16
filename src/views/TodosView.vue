@@ -10,6 +10,7 @@ export default {
 			newTodo: '',
 			idForTodo: 3,
 			filter: 'all',
+			isAllChecked: false,
 			todos: [
 				{ id: 1, title: 'Item 1', completed: false },
 				{ id: 2, title: 'Item 2', completed: true },
@@ -49,14 +50,22 @@ export default {
 		deleteCompletedTodos() {
 			this.todos = this.todos.filter(t => !t.completed)
 		},
+		getCountOfActiveItems() {
+			return this.todos.filter(t => t.completed == false).length
+		},
 		handelCheckAll(e) {
 			const isChecked = e.target.checked
 			this.todos.forEach(t => {
 				t.completed = isChecked
 			})
 		},
-		getCountOfActiveItems() {
-			return this.todos.filter(t => t.completed == false).length
+		handleCompleted(val, id) {
+			const todo = this.todos.find(t => t.id === id);
+			if (todo) todo.completed = val;
+		},
+		handleTitle(val, id) {
+			const todo = this.todos.find(t => t.id === id);
+			if (todo) todo.title = val;
 		}
 	}
 }
@@ -66,23 +75,20 @@ export default {
 	<div class="todos-panel">
 
 		<div class="panel-menu">
-			<input :class="{ invalid: invalidInput }" type="text" placeholder="Add a new task here :)" v-model="newTodo"
-				@keyup.enter="addTodo()">
+			<input type="text" placeholder="Add a new task here :)" v-model="newTodo" @keyup.enter="addTodo()">
 			<button @click="addTodo()">Add</button>
 		</div>
 		<div class="panel-list">
 			<ul>
-				<!-- <TodoListItem v-for="todo in filteredTodos()" v-bind:title="todo.title"  v-bind:id="todo.id"  v-bind:completed="todo.title"/> -->
-				<li v-for="todo in filteredTodos()">
-					<input type="checkbox" name="" :id="todo.id" v-model="todo.completed"/>
-					<p>{{ todo.title }}</p>
-					<button @click="deleteTodo(todo.id)">X</button>
-				</li>
+				<TodoListItem v-for="todo in filteredTodos()" :title="todo.title" :id="todo.id"
+					:completed="todo.completed" @deleteTodo="deleteTodo" @update:completed="handleCompleted"
+					@update:title="handleTitle" />
 			</ul>
 		</div>
 		<div class="panel-control checks">
 			<div class="control-item list-control">
-				<input type="checkbox" name="check-all" id="check-all" @click="handelCheckAll">
+				<input type="checkbox" name="check-all" id="check-all" :checked="!getCountOfActiveItems()"
+					@click="handelCheckAll">
 				<p for="check-all">Check All</p>
 			</div>
 			<div class="control-item list-control">
@@ -125,11 +131,6 @@ input {
 
 input:focus {
 	outline-style: none;
-}
-
-input:focus.invalid {
-	outline-style: dotted;
-	outline-color: red;
 }
 
 /* Body */
@@ -187,31 +188,5 @@ input:focus.invalid {
 
 .panel-control .list-control button:hover {
 	background-color: rgb(81, 200, 81) !important;
-}
-
-/* li compoenten */
-li button {
-	margin-left: auto;
-	border-radius: 1rem;
-	background-color: transparent;
-}
-
-li button:hover {
-	margin-left: auto;
-	border-radius: 1rem;
-	background-color: white;
-}
-/* Body */
-
-li {
-	display: flex;
-	gap: 1rem;
-	border-radius: 3px;
-	padding: 5px 15px;
-	transition: background-color .1s ease-in-out;
-}
-
-li:hover {
-	background-color: rgb(242, 242, 242);
 }
 </style>
