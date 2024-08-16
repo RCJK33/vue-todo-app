@@ -32,7 +32,7 @@ export default {
 <template>
 	<li @dblclick="handleEditing()">
 		<input type="checkbox" :checked="completed" @input="handleCompleted" />
-		<input v-if="editing" ref="editInput" type="text" :value="title" @input="handleTitle"
+		<input class="text" v-if="editing" ref="editInput" type="text" :value="title" @input="handleTitle"
 			@keyup.enter="editing = false" @blur="editing = false"/>
 		<div class="text" v-else :class="{ checked: completed }">{{ title }}</div>
 		<button @click="$emit('deleteTodo', id)">X</button>
@@ -93,6 +93,7 @@ li:hover {
 	font-size: 1rem;
 	font-family: inherit;
 	color: inherit;
+	flex: 1;
 }
 
 .checked {
