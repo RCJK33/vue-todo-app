@@ -30,11 +30,11 @@ export default {
 </script>
 
 <template>
-	<li @dblclick="handleEditing()">
+	<li>
 		<input type="checkbox" :checked="completed" @input="handleCompleted" />
 		<input class="text" v-if="editing" ref="editInput" type="text" :value="title" @input="handleTitle"
 			@keyup.enter="editing = false" @blur="editing = false"/>
-		<div class="text" v-else :class="{ checked: completed }">{{ title }}</div>
+		<div class="text" v-else :class="{ checked: completed }" @dblclick="handleEditing()">{{ title }}</div>
 		<button @click="$emit('deleteTodo', id)">X</button>
 	</li>
 </template>
