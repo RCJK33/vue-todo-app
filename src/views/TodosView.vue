@@ -59,14 +59,6 @@ export default {
 				t.completed = isChecked
 			})
 		},
-		handleCompleted(val, id) {
-			const todo = this.todos.find(t => t.id === id);
-			if (todo) todo.completed = val;
-		},
-		handleTitle(val, id) {
-			const todo = this.todos.find(t => t.id === id);
-			if (todo) todo.title = val;
-		}
 	}
 }
 </script>
@@ -80,9 +72,8 @@ export default {
 		</div>
 		<div class="panel-list">
 			<ul>
-				<TodoListItem v-for="todo in filteredTodos()" :title="todo.title" :id="todo.id"
-					:completed="todo.completed" @deleteTodo="deleteTodo" @update:completed="handleCompleted"
-					@update:title="handleTitle" />
+				<TodoListItem v-for="todo in filteredTodos()" :title.sync="todo.title" :id="todo.id"
+					:completed.sync="todo.completed" @deleteTodo="deleteTodo" />
 			</ul>
 		</div>
 		<div class="panel-control checks">

@@ -13,11 +13,14 @@ export default {
 	},
 	methods: {
 		handleCompleted(e) {
-			this.$emit('update:completed', e.target.checked, this.id)
+			this.$emit('update:completed', e.target.checked)
 
 		},
 		handleTitle(e) {
-			this.$emit('update:title', e.target.value, this.id)
+			this.$emit('update:title', e.target.value)
+		},
+		deleteTodo () {
+			this.$emit('deleteTodo', this.id)
 		},
 		handleEditing() {
 			this.editing = true
@@ -35,7 +38,7 @@ export default {
 		<input class="text" v-if="editing" ref="editInput" type="text" :value="title" @input="handleTitle"
 			@keyup.enter="editing = false" @blur="editing = false"/>
 		<div class="text" v-else :class="{ checked: completed }" @dblclick="handleEditing()">{{ title }}</div>
-		<button @click="$emit('deleteTodo', id)">X</button>
+		<button @click="deleteTodo">X</button>
 	</li>
 </template>
 
